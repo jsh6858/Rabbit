@@ -63,6 +63,8 @@ namespace AWSSDK.Examples
             }
         }
 
+        public Text m_result;
+
         private IAmazonLambda Client
         {
             get
@@ -88,6 +90,7 @@ namespace AWSSDK.Examples
                 {
                     string result = Encoding.ASCII.GetString(response.Response.Payload.ToArray());
 
+                    m_result.text = result;
                     Debug.Log(result);
                 }
                 else
