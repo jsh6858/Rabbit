@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class InputButton : MonoBehaviour
 {
-
+    private Rect drawArea;
     bool ChangeButton = false;
     bool CheckTouchIn = false;
     public Sprite ChangeSprite;
@@ -14,11 +14,16 @@ public class InputButton : MonoBehaviour
     private GameScene.InGameManager inGameManager = null;
     public GameObject ScorePrintObject;
     public GameObject StopBackGroundObject;
-    // Use this for initialization
+
     void Start ()
     {
         inGameManager = GameScene.InGameManager.Getinstance();
         ChangeImage = GetComponent<Image>();
+
+
+        BoxCollider2D box = inGameManager.gestureManager.transform.Find("DrawBox").GetComponent<BoxCollider2D>();
+
+        drawArea = new Rect(new Vector2(box.transform.position.x-box.size.x/2.0f,box.transform.position.y-box.size.y/2.0f),box.size);
     }
 
 	// Update is called once per frame
@@ -26,9 +31,11 @@ public class InputButton : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Input.mousePosition.x > 98.5f && Input.mousePosition.y > 225 &&
-                Input.mousePosition.x < 621.5 && Input.mousePosition.y < 1055)        // 화면 범위 검사
+            if(drawArea.Contains(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            {
                 CheckTouchIn = true;
+            }
+                
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0) && CheckTouchIn)
         {

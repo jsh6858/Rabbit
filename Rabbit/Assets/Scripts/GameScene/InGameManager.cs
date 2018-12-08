@@ -37,7 +37,6 @@ namespace GameScene
         public bool isStageClear = false;
         private float fadeTimer = 50.0f;
         public GAMESTATE nowState = GAMESTATE.Ready_State;
-        //private int count = 0;
 
         void Start()
         {
@@ -58,6 +57,9 @@ namespace GameScene
         IEnumerator PlayReady()
         {
             // 게임 기본 세팅
+
+            GameDataBase.GetInstance().LoadGusture();
+
             gestureManager.nowGesture = GameDataBase.GetInstance().GetGeusture();
 
             yield return StartCoroutine(gestureManager.ShowMainPoint());
@@ -80,7 +82,7 @@ namespace GameScene
                 if(isHint)
                 {
                     isHint = false;
-                   // gestureManager.ShowHint();
+                    gestureManager.ShowHint();
                 }
 
                 yield return null;
@@ -108,11 +110,11 @@ namespace GameScene
                 GameDataBase.GetInstance().totalScore += nowScore;
                 GameDataBase.GetInstance().nowStage++;
 
-                if(5 <= GameDataBase.GetInstance().nowStage)
+                if(5 < GameDataBase.GetInstance().nowStage)
                     nextScene = "HappyEndingScene";
                 else
                 {
-                    nextScene = "GameScene" + GameDataBase.GetInstance().nowStage.ToString();
+                    nextScene = "GameScene";
                 }
             }
 
@@ -128,16 +130,13 @@ namespace GameScene
             yield return StartCoroutine(CameraFadeOut());
 
             GameObject.Find("Canvas").GetComponent<SceneChange>().ChangeScene(nextScene);
-           
-            NextState();
         }
 
         IEnumerator CameraFadeIn()
         {
-            GameObject canvas = GameObject.Find("Canvas");
-            Image image = canvas.transform.Find("FadeFillter").GetComponent<Image>();
+            SpriteRenderer image = Camera.main.transform.Find("FadeFillter").GetComponent<SpriteRenderer>();
 
-            for(int i = 0;i<fadeTimer;i++)
+            for(int i=0;i<fadeTimer;i++)
             {
                 image.color = Color.Lerp(Color.black,Color.clear,i/(fadeTimer-1));
                 yield return null;
@@ -146,10 +145,9 @@ namespace GameScene
 
         IEnumerator CameraFadeOut()
         {
-            GameObject canvas = GameObject.Find("Canvas");
-            Image image = canvas.transform.Find("FadeFillter").GetComponent<Image>();
+            SpriteRenderer image = Camera.main.transform.Find("FadeFillter").GetComponent<SpriteRenderer>();
 
-            for(int i = 0;i<=fadeTimer;i++)
+            for(int i=0;i<=fadeTimer;i++)
             {
                 image.color = Color.Lerp(Color.clear,Color.black,i/(fadeTimer-1));
                 yield return null;

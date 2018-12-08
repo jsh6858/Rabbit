@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TouchChangeImage : MonoBehaviour {
-
+public class TouchChangeImage : MonoBehaviour
+{
     public Texture[] TextureArray;
     public bool IsChangeSceneScript;
     public string ChangeSceneName;
@@ -12,7 +12,9 @@ public class TouchChangeImage : MonoBehaviour {
     private int MaxSize = 0;
     private int TouchCount = 0;
     private int OldTouchCount = -1;
-    void Start () {
+
+    void Start ()
+    {
         ImageTexture = GetComponent<RawImage>();
         MaxSize = TextureArray.Length;
     }

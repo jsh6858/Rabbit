@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GameScene
 {
@@ -21,9 +22,10 @@ namespace GameScene
         private LineRenderer lineRenderer;
 
         public GestureData nowGesture;
+        public Text gestureText;
+        public Text alramText;
         private Vector2[] sampleArray;
         public bool isDrawable = false;
-        public bool isLock = false;
 
         private InGameManager inGameManager = null;
 
@@ -51,6 +53,8 @@ namespace GameScene
 
         public IEnumerator ShowMainPoint()
         {
+            gestureText.text = GameDataBase.GetInstance().GetConvert(nowGesture.strName);
+
             sampleArray = Array.ConvertAll(nowGesture.vecPointArray,data => new Vector2(float.Parse(data.Split('_')[0]),float.Parse(data.Split('_')[1])));
 
             GameObject sampleLine = new GameObject();
@@ -58,7 +62,7 @@ namespace GameScene
             sampleLine.transform.parent = transform;
             sampleLine.name = "Line";
 
-            for(int i = 0;i<sampleArray.Length;i++)
+            for(int i=0;i<sampleArray.Length;i++)
             {
                 GameObject point;
 
@@ -129,6 +133,7 @@ namespace GameScene
             if(!flag)
             {
                 // 힌트 없다고 알려줌!!
+                alramText.text = "더 이상의 힌트는 없다.";
             }
 
         }
@@ -184,7 +189,7 @@ namespace GameScene
 
         void Update()
         {
-            if(!isLock && isDrawable)
+            if(isDrawable)
             {
                 ControlMouse();
             }

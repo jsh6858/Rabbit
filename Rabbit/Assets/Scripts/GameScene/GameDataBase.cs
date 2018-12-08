@@ -24,6 +24,7 @@ namespace GameScene
         }
 
         public Dictionary<string,Vector2[]> gestureSampleDictionary = new Dictionary<string,Vector2[]>();
+        public Dictionary<string,string> convertText = new Dictionary<string,string>();
         public List<GestureData> gustureList = new List<GestureData>();
 
         public int totalScore = 0;
@@ -38,7 +39,25 @@ namespace GameScene
 
         void Awake()
         {
-            DontDestroyOnLoad(this);
+            convertText.Add("Star","별");
+            convertText.Add("Home","집");
+            convertText.Add("Aries","양자리");
+            convertText.Add("Circle","원");
+            convertText.Add("Fish","물고기");
+            convertText.Add("Glasses","안경");
+            convertText.Add("ToothBrush","칫솔");
+            convertText.Add("LegoHead","레고머리");
+            convertText.Add("RavitCap","토끼모자");
+
+            DontDestroyOnLoad(this);            
+
+            LoadOperater();
+        }
+
+        public void LoadGusture()
+        {
+            gestureSampleDictionary.Clear();
+            gustureList.Clear();
 
             Object[] JSONObjects = Resources.LoadAll("Texts/"+nowStage+"/");
             TextAsset[] textArray = new TextAsset[JSONObjects.Length];
@@ -51,13 +70,16 @@ namespace GameScene
             foreach(TextAsset ta in textArray)
             {
                 GestureData gImage = LitJson.JsonMapper.ToObject<GestureData>(ta.text);
-                Vector2[] pointArray = System.Array.ConvertAll(gImage.vecPointArray,data=>new Vector2(float.Parse(data.Split('_')[0]),float.Parse(data.Split('_')[1])));
+                Vector2[] pointArray = System.Array.ConvertAll(gImage.vecPointArray,data => new Vector2(float.Parse(data.Split('_')[0]),float.Parse(data.Split('_')[1])));
 
-                gestureSampleDictionary.Add(gImage.strName,pointArray);                
+                gestureSampleDictionary.Add(gImage.strName,pointArray);
                 gustureList.Add(gImage);
             }
+        }
 
-            LoadOperater();
+        public string GetConvert(string _str)
+        {
+            return convertText[_str];
         }
 
         void LoadOperater()
