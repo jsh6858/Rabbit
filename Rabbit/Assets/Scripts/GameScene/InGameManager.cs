@@ -125,11 +125,8 @@ namespace GameScene
 
 
             // 필요한 엔딩 이미지 ㄱㄱ
-
-            // 다음 씬 ㄱㄱ
-
-            yield return new WaitForSeconds(2.0f);
             // 점수 출력
+            
             GameObject.Find("ScorePrint").transform.Find("Text").GetComponent<Text>().text = nowScore.ToString() + "점";
             yield return new WaitForSeconds(2.0f);
             yield return StartCoroutine(CameraFadeOut());

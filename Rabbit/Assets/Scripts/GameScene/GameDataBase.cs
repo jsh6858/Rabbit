@@ -46,7 +46,7 @@ namespace GameScene
             convertText.Add("Fish","물고기");
             convertText.Add("Glasses","안경");
             convertText.Add("ToothBrush","칫솔");
-            convertText.Add("LegoHead","레고머리");
+            convertText.Add("LegoHead","레고케빈");
             convertText.Add("RavitCap","토끼모자");
 
             DontDestroyOnLoad(this);            
