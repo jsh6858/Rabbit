@@ -14,20 +14,14 @@ namespace GameScene
         private Vector3 inputPosition = Vector3.zero;
         private List<Vector2> pointList = new List<Vector2>();
         private List<Collider2D> checkPointList = new List<Collider2D>();
-        private List<GameObject> mainList = new List<GameObject>();
-
-
         private Rect drawArea;
         private LineRenderer lineRenderer;
 
         public GestureData nowGesture;
         private Vector2[] sampleArray;
         public bool isDrawable = false;
-        public bool isLock = false;
 
         private InGameManager inGameManager = null;
-
-        private int hintScore = 0;
 
         void Awake()
         {
@@ -78,32 +72,8 @@ namespace GameScene
                 point.name = "Point_"+i;
             }
 
-            for(int i=0;i<sampleLine.transform.childCount;i++)
-            {
-                if(sampleLine.transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Point"))
-                {
-                    if(sampleLine.transform.GetChild(i).gameObject.activeSelf)
-                    {
-                        mainList.Add(sampleLine.transform.GetChild(i).gameObject);
-                    }
-                }
-            }
-
-            int showCount = (int)(mainList.Count*GameDataBase.GetInstance().pointPercent);
-
-
-
-
-
-
             yield return null;
         }
-
-        public void ShowHint()
-        {
-            hintScore += GameDataBase.GetInstance().minusScore;
-        }
-
 
         void ControlMouse()
         {
@@ -155,7 +125,7 @@ namespace GameScene
 
         void Update()
         {
-            if(!isLock && isDrawable)
+            if(isDrawable)
             {
                 ControlMouse();
             }
@@ -165,15 +135,26 @@ namespace GameScene
 	    {            
             Transform sampleLine = transform.Find("Line");
 
-            List<int> mainNumList = mainList.ConvertAll(obj=>int.Parse(obj.name.Split('_')[1]));
+            List<int> mainList = new List<int>();
+
+            for(int i=0;i<sampleLine.childCount;i++)
+            {
+                if(sampleLine.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Point"))
+                {
+                    if(sampleLine.GetChild(i).gameObject.activeSelf)
+                    {
+                        mainList.Add(int.Parse(sampleLine.GetChild(i).name.Split('_')[1]));
+                    }
+                }
+            }
 
             // 점 통과 점수
-            float elseScore = (checkPointList.Count/(float)mainNumList.Count)*50.0f;
+            float elseScore = (checkPointList.Count/(float)mainList.Count)*50.0f;
 
             List<int> checkList = checkPointList.ConvertAll(col=>int.Parse(col.name.Split('_')[1])).ToList();
 
 
-            if(mainNumList.Equals(checkList))
+            if(mainList.Equals(checkList))
             {
                 elseScore += 10.0f;
             }

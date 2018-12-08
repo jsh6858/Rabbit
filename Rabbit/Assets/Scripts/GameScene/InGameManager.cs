@@ -80,7 +80,7 @@ namespace GameScene
                 if(isHint)
                 {
                     isHint = false;
-                    gestureManager.ShowHint();
+                   // gestureManager.ShowHint();
                 }
 
                 yield return null;

@@ -14,7 +14,6 @@ public class InputButton : MonoBehaviour
     private GameScene.InGameManager inGameManager = null;
     public GameObject ScorePrintObject;
     public GameObject StopBackGroundObject;
-    public GameObject StopButtonObject;
     // Use this for initialization
     void Start ()
     {
@@ -46,7 +45,6 @@ public class InputButton : MonoBehaviour
             // 제출 모양
             ScorePrintObject.SetActive(true);
             StopBackGroundObject.SetActive(true);
-            StopButtonObject.SetActive(false);
             inGameManager.isSubmit = true;
         }
         else
