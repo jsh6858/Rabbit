@@ -11,4 +11,9 @@ public class SceneChange : MonoBehaviour {
         SceneManager.LoadScene(SceneName);
     }
 
+    public void ChangeStageScene()
+    {
+        string nextScene = "GameScene" + GameScene.GameDataBase.GetInstance().nowStage.ToString();
+        SceneManager.LoadScene(nextScene);
+    }
 }
