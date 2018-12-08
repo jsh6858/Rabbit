@@ -13,6 +13,7 @@ namespace GameScene
     
         private Vector3 inputPosition = Vector3.zero;
         private List<Vector2> pointList = new List<Vector2>();
+        private List<Collider2D> checkPointList = new List<Collider2D>();
         private Rect drawArea;
         private LineRenderer lineRenderer;
 
@@ -34,6 +35,12 @@ namespace GameScene
             BoxCollider2D box = transform.Find("DrawBox").GetComponent<BoxCollider2D>();
             
             drawArea = new Rect(new Vector2(box.transform.position.x-box.size.x/2.0f,box.transform.position.y-box.size.y/2.0f),box.size);
+
+            GameObject line = Instantiate(linePrefab,transform.position,transform.rotation) as GameObject;
+            lineRenderer = line.GetComponent<LineRenderer>();
+
+            pointList.Clear();
+            checkPointList.Clear();
         }
 
         public IEnumerator ShowMainPoint()
@@ -79,30 +86,39 @@ namespace GameScene
 
                 if (drawArea.Contains(inputPosition))
                 {
-                    // 처음 누르는 상황
-                    if (Input.GetMouseButtonDown(0))
+                    if(pointList.Count == 0 || Vector2.Distance(pointList[pointList.Count-1],inputPosition)>0.01f)
                     {
-                        // 기존 선을 삭제한다.
-                        if (lineRenderer != null)
-                        {
-                            Destroy(lineRenderer.gameObject);
-                        }
+                        pointList.Add(inputPosition);
 
-                        GameObject line = Instantiate(linePrefab, transform.position, transform.rotation) as GameObject;
-                        lineRenderer = line.GetComponent<LineRenderer>();
-
-                        pointList.Clear();
+                        lineRenderer.positionCount = pointList.Count;
+                        lineRenderer.SetPositions(Array.ConvertAll(pointList.ToArray(),vec2 => new Vector3(vec2.x,vec2.y,0.0f)));
                     }
-                    else
-                    {
-                        if(pointList.Count == 0 || Vector2.Distance(pointList[pointList.Count-1],inputPosition)>0.01f)
-                        {
-                            pointList.Add(inputPosition);
 
-                            lineRenderer.positionCount = pointList.Count;
-                            lineRenderer.SetPositions(Array.ConvertAll(pointList.ToArray(),vec2 => new Vector3(vec2.x,vec2.y,0.0f)));
+                    // 포인트 체크
+
+                    if(pointList.Count != 0)
+                    {
+                        LayerMask pointLayer = 1<<LayerMask.NameToLayer("Point");
+                        Collider2D collider = Physics2D.OverlapCircle(inputPosition,lineRenderer.startWidth,pointLayer);
+
+                        if(collider != null)
+                        {
+                            checkPointList.Add(collider);
+                            checkPointList = checkPointList.Distinct().ToList();
                         }
                     }
+                }
+            }
+            else if(Input.GetMouseButtonUp(0))
+            {
+                Vector3 pos = Input.mousePosition;
+                inputPosition = Camera.main.ScreenToWorldPoint(pos);
+
+                inputPosition.z = 0.0f;
+
+                if(drawArea.Contains(inputPosition))
+                {
+                    isDrawable = false;
                 }
             }
         }
@@ -117,9 +133,39 @@ namespace GameScene
 
         int Classify(Vector2[] candidate)
 	    {            
+            Transform sampleLine = transform.Find("Line");
+
+            List<int> mainList = new List<int>();
+
+            for(int i=0;i<sampleLine.childCount;i++)
+            {
+                if(sampleLine.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Point"))
+                {
+                    if(sampleLine.GetChild(i).gameObject.activeSelf)
+                    {
+                        mainList.Add(int.Parse(sampleLine.GetChild(i).name.Split('_')[1]));
+                    }
+                }
+            }
+
+            // 점 통과 점수
+            float elseScore = (checkPointList.Count/(float)mainList.Count)*50.0f;
+
+            List<int> checkList = checkPointList.ConvertAll(col=>int.Parse(col.name.Split('_')[1])).ToList();
+
+
+            if(mainList.Equals(checkList))
+            {
+                elseScore += 10.0f;
+            }
+
+            // 패턴 인식
             float distance = GreedyCloudMatch(SamplingGesture(candidate),SamplingGesture(sampleArray));
-            
-            return (int)((Mathf.Max((distance-2.0f)/-2.0f,0.0f))*100.0f);
+
+            Debug.Log("P"+((Mathf.Max((distance-2.0f)/-2.0f,0.0f))*40.0f)+" "+elseScore);
+
+            // 패턴인식 점수 40% + 점 통과 50% + 순서 10%
+            return (int) (((Mathf.Max((distance-2.0f)/-2.0f,0.0f))*40.0f) + elseScore);
 	    }
 
         float GreedyCloudMatch(Vector2[] _pointArrayA,Vector2[] _pointArrayB)
