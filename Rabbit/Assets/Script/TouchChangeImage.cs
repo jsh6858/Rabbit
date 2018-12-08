@@ -35,11 +35,15 @@ public class TouchChangeImage : MonoBehaviour
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0) || timer > 4.0f);
         yield return null;
 
+        timer = 0.0f;
+
         introArray[1].SetActive(false);
         introArray[2].SetActive(true);
-
+        
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0) || timer > 4.0f);
         yield return null;
+
+        timer = 0.0f;
 
         Sound_Manager.GetInstance().Stop_Sound();
         SceneManager.LoadScene("GameScene");
@@ -49,33 +53,4 @@ public class TouchChangeImage : MonoBehaviour
     {
         timer += Time.fixedDeltaTime;
     }
-
-    //void Update ()
-    //{
-    //    KeyCheck();
-        
-    //    if(TouchCount >= MaxSize)
-    //    {
-    //        if (!IsChangeSceneScript)
-    //            return;
-    //        else
-    //        {
-    //            SceneManager.LoadScene(ChangeSceneName);
-    //            return;
-    //        }
-    //    }
-
-    //    if(OldTouchCount != TouchCount)
-    //    {
-    //        if(TouchCount == MaxSize-1)
-    //        {
-    //            Debug.Log("!!");
-    //        }
-
-
-    //        OldTouchCount = TouchCount;
-    //        ImageTexture.texture = TextureArray[TouchCount];
-    //        transform.Find("Text").GetComponent<Text>().text = IntroText[TouchCount];
-    //    }
-    //}
 }

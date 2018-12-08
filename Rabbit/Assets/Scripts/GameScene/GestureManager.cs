@@ -82,7 +82,7 @@ namespace GameScene
                 point.name = "Point_"+i;
             }
 
-            for(int i = 0;i<sampleLine.transform.childCount;i++)
+            for(int i=0;i<sampleLine.transform.childCount;i++)
             {
                 if(sampleLine.transform.GetChild(i).gameObject.layer == LayerMask.NameToLayer("Point"))
                 {
@@ -135,9 +135,7 @@ namespace GameScene
                 // 힌트 없다고 알려줌!!
                 alramText.text = "더 이상의 힌트는 없다.";
             }
-
         }
-
 
         void ControlMouse()
         {
@@ -185,6 +183,30 @@ namespace GameScene
                     isDrawable = false;
                 }
             }
+        }
+
+        public IEnumerator ShowSampleLine()
+        {
+            Transform sample = transform.Find("Line");
+            GameObject line = Instantiate(linePrefab,transform.position,transform.rotation) as GameObject;
+            LineRenderer sampleLine = line.GetComponent<LineRenderer>();
+
+            sampleLine.startColor = Color.red;
+            sampleLine.endColor = Color.red;
+
+            sampleLine.positionCount = sample.childCount;
+
+            for(int i=0;i<sample.childCount;i++)
+            {
+                sampleLine.SetPosition(i,sample.GetChild(i).position);
+            }
+
+            for(int i=0;i<mainList.Count;i++)
+            {
+                mainList[i].SetActive(true);
+            }
+
+            yield return null;
         }
 
         void Update()

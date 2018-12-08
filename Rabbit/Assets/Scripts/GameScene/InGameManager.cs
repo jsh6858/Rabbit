@@ -104,7 +104,7 @@ namespace GameScene
 
             string nextScene;
 
-            if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage - 1])
+            if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage-1])
             {
                 // 실패!!
                 nextScene = "BadEndingScene";
@@ -123,12 +123,23 @@ namespace GameScene
                 }
             }
 
+            CreateDugu dugu = GameObject.Find("ScorePrint").GetComponent<CreateDugu>();
 
+            yield return StartCoroutine(dugu.Dugu());
+
+            yield return new WaitForSeconds(1.0f);
+
+            yield return StartCoroutine(gestureManager.ShowSampleLine());
+
+            yield return new WaitForSeconds(1.0f);
+            
             // 필요한 엔딩 이미지 ㄱㄱ
             // 점수 출력
-            
+
             GameObject.Find("ScorePrint").transform.Find("Text").GetComponent<Text>().text = nowScore.ToString() + "점";
-            yield return new WaitForSeconds(2.0f);
+
+            yield return new WaitForSeconds(3.0f);
+
             yield return StartCoroutine(CameraFadeOut());
 
             GameObject.Find("Canvas").GetComponent<SceneChange>().ChangeScene(nextScene);

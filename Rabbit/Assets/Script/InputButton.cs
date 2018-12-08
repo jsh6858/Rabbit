@@ -13,7 +13,6 @@ public class InputButton : MonoBehaviour
 
     private GameScene.InGameManager inGameManager = null;
     public GameObject ScorePrintObject;
-    public GameObject StopBackGroundObject;
 
     void Start ()
     {
@@ -54,7 +53,6 @@ public class InputButton : MonoBehaviour
         {
             // 제출 모양
             ScorePrintObject.SetActive(true);
-            StopBackGroundObject.SetActive(true);
             inGameManager.isSubmit = true;
         }
         else
