@@ -58,6 +58,7 @@ public class InputButton : MonoBehaviour
         {
             // 힌트 모양
             inGameManager.isHint = true;
+            Sound_Manager.GetInstance().PlaySound("Hint");
         }
     }
 }

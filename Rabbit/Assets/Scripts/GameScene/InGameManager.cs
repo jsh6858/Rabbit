@@ -42,6 +42,9 @@ namespace GameScene
         {
             nowState = GAMESTATE.Ready_State;
             NextState();
+            
+            if(!Sound_Manager.GetInstance().IsPlaying())
+                Sound_Manager.GetInstance().PlaySound("In_Game");
         }
 
         void NextState()

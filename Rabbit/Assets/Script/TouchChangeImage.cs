@@ -17,6 +17,9 @@ public class TouchChangeImage : MonoBehaviour {
     {
         ImageTexture = GetComponent<RawImage>();
         MaxSize = TextureArray.Length;
+
+        Sound_Manager.GetInstance().Stop_Sound();
+        Sound_Manager.GetInstance().PlaySound("EventScene");
     }
 	
     void KeyCheck()
@@ -36,6 +39,7 @@ public class TouchChangeImage : MonoBehaviour {
                 return;
             else
             {
+                Sound_Manager.GetInstance().Stop_Sound();
                 SceneManager.LoadScene(ChangeSceneName);
                 return;
             }
