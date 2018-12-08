@@ -1294,6 +1294,7 @@ MonoBehaviour:
   linePrefab: {fileID: 100000, guid: 971129baafd304455a111daa5207b8a1, type: 2}
   mainPoint: {fileID: 1326929440209162, guid: 70f037e48b67d8b48ae83b0e39555527, type: 2}
   isDrawable: 0
+  isLock: 0
 --- !u!4 &1763750786
 Transform:
   m_ObjectHideFlags: 0

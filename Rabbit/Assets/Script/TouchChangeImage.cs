@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class TouchChangeImage : MonoBehaviour {
 
+
     public Texture[] TextureArray;
     public bool IsChangeSceneScript;
     public string ChangeSceneName;
