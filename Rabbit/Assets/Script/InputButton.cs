@@ -52,6 +52,7 @@ public class InputButton : MonoBehaviour
         else
         {
             // 힌트 모양
+            inGameManager.isHint = true;
         }
     }
 }
