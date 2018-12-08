@@ -97,6 +97,8 @@ namespace GameScene
 
             Debug.Log(nowScore);
 
+            Sound_Manager.GetInstance().PlaySound("Drum");
+
             string nextScene;
 
             if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage])
