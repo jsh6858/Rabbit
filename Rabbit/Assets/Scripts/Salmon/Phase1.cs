@@ -4,7 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Phase1 : MonoBehaviour {
-    
+
+    private void Awake()
+    {
+        GameScene.GameDataBase Instance = GameScene.GameDataBase.GetInstance();
+
+        if(Instance != null)
+        {
+            int iScore = Instance.totalScore;
+
+            transform.Find("Text").GetComponent<Text>().text = iScore.ToString();
+        }
+    }
+
     public IEnumerator Fade_Out()
     {
         transform.Find("InputField").gameObject.SetActive(false);

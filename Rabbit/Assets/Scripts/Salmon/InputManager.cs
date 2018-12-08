@@ -14,7 +14,15 @@ public class InputManager : MonoBehaviour {
 
     public void Input_Name()
     {
-        int iScore = Random.Range(0, 500);
+        GameScene.GameDataBase Instance = GameScene.GameDataBase.GetInstance();
+
+        int iScore = 0;
+        if (Instance != null)
+        {
+            iScore = Instance.totalScore;
+
+            transform.Find("Text").GetComponent<Text>().text = iScore.ToString();
+        }
 
         string name = m_input.text;
 
