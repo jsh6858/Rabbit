@@ -98,20 +98,26 @@ namespace GameScene
             {
                 // 성공!! 다음 스테이지 ㄱㄱ
                 GameDataBase.GetInstance().totalScore += nowScore;
+                GameDataBase.GetInstance().nowStage++;
 
-                nextScene = "GameScene";
+                if(5 <= GameDataBase.GetInstance().nowStage)
+                    nextScene = "HappyEndingScene";
+                else
+                {
+                    nextScene = "GameScene" + GameDataBase.GetInstance().nowStage.ToString();
+                }
             }
+
 
             // 필요한 엔딩 이미지 ㄱㄱ
 
-            yield return new WaitForSeconds(5.0f);
-
             // 다음 씬 ㄱㄱ
+           
+            yield return new WaitForSeconds(5.0f);
+            yield return StartCoroutine(CameraFadeOut());
 
-            yield return null;
-
-            //yield return StartCoroutine(CameraFadeOut());
-
+            GameObject.Find("Canvas").GetComponent<SceneChange>().ChangeScene(nextScene);
+           
             NextState();
         }
 
