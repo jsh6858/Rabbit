@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/BadEndingScene.unity
-    guid: af513fd5cccfec548ba494d26dc07d9b
-  - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 188d6ef9eec3b5d468839e3dd31a47f6
+    path: Assets/Scenes/Logo.unity
+    guid: 84b06602b50e9c2469624586e51896ae
   - enabled: 1
     path: Assets/Scenes/Intro.unity
     guid: 437627e471887fb4ab5e3f2c9c571c95
   - enabled: 1
-    path: Assets/Scenes/Logo.unity
-    guid: 84b06602b50e9c2469624586e51896ae
+    path: Assets/Scenes/GameScene.unity
+    guid: 188d6ef9eec3b5d468839e3dd31a47f6
+  - enabled: 1
+    path: Assets/Scenes/BadEndingScene.unity
+    guid: af513fd5cccfec548ba494d26dc07d9b
   m_configObjects: {}

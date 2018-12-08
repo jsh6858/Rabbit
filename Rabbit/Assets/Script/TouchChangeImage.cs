@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TouchChangeImage : MonoBehaviour {
     public Texture[] TextureArray;
@@ -35,7 +36,7 @@ public class TouchChangeImage : MonoBehaviour {
                 return;
             else
             {
-                GetComponent<SceneChange>().ChangeScene(ChangeSceneName);
+                SceneManager.LoadScene(ChangeSceneName);
                 return;
             }
         }
