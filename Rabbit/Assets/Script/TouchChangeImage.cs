@@ -41,6 +41,7 @@ public class TouchChangeImage : MonoBehaviour
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0) || timer > 4.0f);
         yield return null;
 
+        Sound_Manager.GetInstance().Stop_Sound();
         SceneManager.LoadScene("GameScene");
     }
 
