@@ -20,10 +20,12 @@ public class InputButton : MonoBehaviour
         inGameManager = GameScene.InGameManager.Getinstance();
         ChangeImage = GetComponent<Image>();
 
-
         BoxCollider2D box = inGameManager.gestureManager.transform.Find("DrawBox").GetComponent<BoxCollider2D>();
 
         drawArea = new Rect(new Vector2(box.transform.position.x-box.size.x/2.0f,box.transform.position.y-box.size.y/2.0f),box.size);
+
+        ChangeImage.enabled = true;
+        ChangeImage.transform.GetChild(0).gameObject.SetActive(false);
     }
 
 	// Update is called once per frame
@@ -40,7 +42,8 @@ public class InputButton : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Mouse0) && CheckTouchIn)
         {
             ChangeButton = true;
-            ChangeImage.sprite = ChangeSprite;    // 이미지 제출로 변경
+            ChangeImage.enabled = false;
+            ChangeImage.transform.GetChild(0).gameObject.SetActive(true);
         }
 	}
 
