@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StopButton : MonoBehaviour {
+public class StartButton : MonoBehaviour {
 
+	// Use this for initialization
 	void Start () {
-    }
+		
+	}
 	
 	// Update is called once per frame
 	void Update () {
-	    	
+		
 	}
 
-    public void StopDraw()
+    public void StartDraw()
     {
-        GameScene.InGameManager.Getinstance().gestureManager.isDrawable = false;
-
+        GameScene.InGameManager.Getinstance().gestureManager.isDrawable = true;
         Debug.Log(GameScene.InGameManager.Getinstance().gestureManager.isDrawable);
     }
 }

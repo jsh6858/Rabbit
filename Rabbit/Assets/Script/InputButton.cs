@@ -12,13 +12,15 @@ public class InputButton : MonoBehaviour
     private Image ChangeImage;
 
     private GameScene.InGameManager inGameManager = null;
-
+    public GameObject ScorePrintObject;
+    public GameObject StopBackGroundObject;
+    public GameObject StopButtonObject;
     // Use this for initialization
     void Start ()
     {
         inGameManager = GameScene.InGameManager.Getinstance();
         ChangeImage = GetComponent<Image>();
-	}
+    }
 
 	// Update is called once per frame
 	void Update ()
@@ -42,6 +44,9 @@ public class InputButton : MonoBehaviour
         if(ChangeButton)
         {
             // 제출 모양
+            ScorePrintObject.SetActive(true);
+            StopBackGroundObject.SetActive(true);
+            StopButtonObject.SetActive(false);
             inGameManager.isSubmit = true;
         }
         else
