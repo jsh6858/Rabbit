@@ -115,11 +115,11 @@ namespace GameScene
             }
         }
 
-        float Classify(Vector2[] candidate)
+        int Classify(Vector2[] candidate)
 	    {            
             float distance = GreedyCloudMatch(SamplingGesture(candidate),SamplingGesture(sampleArray));
             
-            return ((Mathf.Max((distance-2.0f)/-2.0f,0.0f))*100.0f);
+            return (int)((Mathf.Max((distance-2.0f)/-2.0f,0.0f))*100.0f);
 	    }
 
         float GreedyCloudMatch(Vector2[] _pointArrayA,Vector2[] _pointArrayB)
@@ -181,16 +181,16 @@ namespace GameScene
 		    return sum;
 	    }
 
-        public float Recognize()
+        public int Recognize()
         {        
             float dis = -1.0f;
             Vector3 maxPos = Vector3.zero;
-            float percent = 0.0f;
+            int percent = 0;
         
             //직선의 점이 4개 이하라면 무시한다.
             if(pointList.Count<4)
             {
-                percent = 0.0f;
+                percent = 0;
             }
             else
             {
@@ -201,7 +201,7 @@ namespace GameScene
         
                 if(dis<0.2f)
                 {
-                    percent = 0.0f;
+                    percent = 0;
                 }
                 else
                 {

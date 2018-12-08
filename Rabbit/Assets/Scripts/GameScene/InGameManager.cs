@@ -60,12 +60,12 @@ namespace GameScene
         IEnumerator PlayReady()
         {
             // 게임 기본 세팅
-            gestureManager.nowGesture = GameDataBase.instance.GetGeusture();
+            gestureManager.nowGesture = GameDataBase.GetInstance().GetGeusture();
 
             yield return StartCoroutine(gestureManager.ShowMainPoint());
 
             nowState = GAMESTATE.Draw_State;
-
+            
             yield return StartCoroutine(CameraFadeIn());
 
             NextState();
@@ -77,16 +77,37 @@ namespace GameScene
             
             nowState = GAMESTATE.Submit_State;
 
-            yield return new WaitUntil(()=>isSubmit);
-
-            Debug.Log(gestureManager.Recognize());
+            yield return new WaitUntil(()=>isSubmit);            
 
             NextState();
         }
 
         IEnumerator PlaySubmit()
         {
-            //nowState = GAMESTATE.Game_State;
+            int nowScore = gestureManager.Recognize();
+
+            Debug.Log(nowScore);
+
+            string nextScene;
+
+            if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage])
+            {
+                // 실패!!
+                nextScene = "BadEndingScene";
+            }
+            else
+            {
+                // 성공!! 다음 스테이지 ㄱㄱ
+                GameDataBase.GetInstance().totalScore += nowScore;
+
+                nextScene = "GameScene";
+            }
+
+            // 필요한 엔딩 이미지 ㄱㄱ
+
+            yield return new WaitForSeconds(5.0f);
+
+            // 다음 씬 ㄱㄱ
 
             yield return null;
 

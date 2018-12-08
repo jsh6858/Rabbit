@@ -1,28 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 namespace GameScene
 {
-    public class GameDataBase :MonoBehaviour
+    public class GameDataBase : MonoBehaviour
     {
-        private static GameDataBase s_instance = null;
-        public static GameDataBase instance
+        private static GameDataBase instance = null;
+        private static GameObject container;
+
+        public static GameDataBase GetInstance()
         {
-            get
+            if(!instance)
             {
-                s_instance = FindObjectOfType(typeof(GameDataBase)) as GameDataBase;
-                return (s_instance != null) ? s_instance : null;
+                container = new GameObject();
+                container.name = "GameDataBase";
+                instance = container.AddComponent(typeof(GameDataBase)) as GameDataBase;
             }
+
+            return instance;
         }
 
         public Dictionary<string,Vector2[]> gestureSampleDictionary = new Dictionary<string,Vector2[]>();
         public List<GestureData> gustureList = new List<GestureData>();
 
-        public int nowScore = 0;
+        public int totalScore = 0;
         public int nowStage = 1;
-        
+
+        private OperateZone opZoneSetting = new OperateZone();
+
+        public int[] cutlineScore;
+        public int hintCount;
+        public int minusScore;
+
         void Awake()
         {
             DontDestroyOnLoad(this);
@@ -43,6 +55,111 @@ namespace GameScene
                 gestureSampleDictionary.Add(gImage.strName,pointArray);                
                 gustureList.Add(gImage);
             }
+
+            LoadOperater();
+        }
+
+        void LoadOperater()
+        {
+            string path = "OperateZone.json";
+            string _strJson = ReadStringFromFile(path);
+
+            if(_strJson != null)
+            {
+                opZoneSetting = LitJson.JsonMapper.ToObject<OperateZone>(_strJson);
+            }
+            else
+            {
+                opZoneSetting.iCutlineScore = new string[] { "10","15","20","25","30" };
+                opZoneSetting.iHintCount = "5";
+                opZoneSetting.iMinusScore = "10";
+
+                // json을 만들어 저장한다.
+                string strJson = JsonFx.Json.JsonWriter.Serialize(opZoneSetting);
+
+                WriteStringToFile(strJson,path);
+            }
+            cutlineScore = System.Array.ConvertAll(opZoneSetting.iCutlineScore,str=>int.Parse(str));
+            hintCount = int.Parse(opZoneSetting.iHintCount);
+            minusScore = int.Parse(opZoneSetting.iMinusScore);
+        }
+
+        string ReadStringFromFile(string filename)
+        {
+            string path = PathForDocumentsFile(filename);
+
+            if(File.Exists(path))
+            {
+                FileStream file = new FileStream(path,FileMode.Open,FileAccess.Read);
+                StreamReader sr = new StreamReader(file);
+
+                string str = null;
+                str = sr.ReadToEnd();
+
+                sr.Close();
+                file.Close();
+
+                return str;
+            }
+
+            else
+            {
+                return null;
+            }
+        }
+
+        public void WriteStringToFile(string str,string filename)
+        {
+            string path = PathForDocumentsFile(filename);
+            FileInfo fileInfo = new FileInfo(path);
+
+            if(Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                if(fileInfo.Exists)
+                {
+                    return;
+                }
+                else
+                {
+                    FileStream file = new FileStream(path,FileMode.Create,FileAccess.Write);
+                    StreamWriter sw = new StreamWriter(file);
+                    sw.WriteLine(str);
+
+                    sw.Close();
+                    file.Close();
+                }
+            }
+            else
+            {
+                FileStream file = new FileStream(path,FileMode.Create,FileAccess.Write);
+                StreamWriter sw = new StreamWriter(file);
+                sw.WriteLine(str);
+
+                sw.Close();
+                file.Close();
+            }
+        }
+
+        public string PathForDocumentsFile(string filename)
+        {
+            if(Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                string path = Application.dataPath.Substring(0,Application.dataPath.Length - 5);
+                path = path.Substring(0,path.LastIndexOf('/'));
+                return Path.Combine(Path.Combine(path,"Documents"),filename);
+            }
+            else if(Application.platform == RuntimePlatform.Android)
+            {
+                string path = Application.persistentDataPath;
+                path = path.Substring(0,path.LastIndexOf('/'));
+                return Path.Combine(path,filename);
+            }
+            else
+            {
+                string path = Application.dataPath;
+                path = path.Substring(0,path.LastIndexOf('/'));
+                return Path.Combine(path,filename);
+            }
         }
 
         public GestureData GetGeusture()
@@ -55,5 +172,12 @@ namespace GameScene
     {
         public string strName { get; set; }
         public string[] vecPointArray { get; set; }
+    }
+
+    public class OperateZone
+    {
+        public string[] iCutlineScore { get; set; }        //int      - 실패 점수
+        public string iHintCount { get; set; }             //int      - 힌트 갯수
+        public string iMinusScore { get; set; }            //int      - 감점(힌트 사용시)
     }
 }
