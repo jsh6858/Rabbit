@@ -3,14 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-<<<<<<< HEAD
-public class TouchChangeImage : MonoBehaviour
-{
-=======
 public class TouchChangeImage : MonoBehaviour {
-
-
->>>>>>> 560acb94e7b224c082087bce8c9f58dc2338999a
     public Texture[] TextureArray;
     public bool IsChangeSceneScript;
     public string ChangeSceneName;
@@ -18,7 +11,7 @@ public class TouchChangeImage : MonoBehaviour {
     private int MaxSize = 0;
     private int TouchCount = 0;
     private int OldTouchCount = -1;
-
+    public string[] IntroText;
     void Start ()
     {
         ImageTexture = GetComponent<RawImage>();
@@ -51,6 +44,7 @@ public class TouchChangeImage : MonoBehaviour {
         {
             OldTouchCount = TouchCount;
             ImageTexture.texture = TextureArray[TouchCount];
+            transform.Find("Text").GetComponent<Text>().text = IntroText[TouchCount];
         }
     }
 }
