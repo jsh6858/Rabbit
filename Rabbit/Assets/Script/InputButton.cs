@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InputButton : MonoBehaviour {
+public class InputButton : MonoBehaviour
+{
 
     bool ChangeButton = false;
     bool CheckTouchIn = false;
     public Sprite ChangeSprite;
     private Image ChangeImage;
-	// Use this for initialization
-	void Start () {
+
+    private GameScene.InGameManager inGameManager = null;
+
+    // Use this for initialization
+    void Start ()
+    {
+        inGameManager = GameScene.InGameManager.Getinstance();
         ChangeImage = GetComponent<Image>();
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (Input.mousePosition.x > 110 && Input.mousePosition.y > 110 &&
@@ -35,6 +42,7 @@ public class InputButton : MonoBehaviour {
         if(ChangeButton)
         {
             // 제출 모양
+            inGameManager.isSubmit = true;
         }
         else
         {

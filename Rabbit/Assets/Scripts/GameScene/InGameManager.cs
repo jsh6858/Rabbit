@@ -36,9 +36,8 @@ namespace GameScene
         public bool isStageClear = false;
         private float fadeTimer = 50.0f;
         public GAMESTATE nowState = GAMESTATE.Ready_State;
-        //public GestureData stageGesture = null;
 
-        private int count = 0;
+        //private int count = 0;
 
         void Start()
         {
