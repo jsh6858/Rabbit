@@ -104,7 +104,7 @@ namespace GameScene
 
             string nextScene;
 
-            if(nowScore + 15 < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage - 1])
+            if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage - 1])
             {
                 // 실패!!
                 nextScene = "BadEndingScene";
