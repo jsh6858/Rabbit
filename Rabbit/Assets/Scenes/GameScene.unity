@@ -1454,6 +1454,7 @@ MonoBehaviour:
   gestureText: {fileID: 752154192}
   alramText: {fileID: 1511186104}
   isDrawable: 0
+  isLock: 0
 --- !u!4 &1763750786
 Transform:
   m_ObjectHideFlags: 0

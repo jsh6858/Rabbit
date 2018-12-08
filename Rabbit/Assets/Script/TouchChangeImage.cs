@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+<<<<<<< HEAD
 public class TouchChangeImage : MonoBehaviour
 {
+=======
+public class TouchChangeImage : MonoBehaviour {
+
+
+>>>>>>> 560acb94e7b224c082087bce8c9f58dc2338999a
     public Texture[] TextureArray;
     public bool IsChangeSceneScript;
     public string ChangeSceneName;

@@ -47,7 +47,8 @@ namespace AWSSDK.Examples
 
             Amazon.AWSConfigs.HttpClient = Amazon.AWSConfigs.HttpClientOption.UnityWebRequest;
 
-            Invoke("TestFunc", "{\"key1\":\"kwon\"}");
+            Invoke("FuncRank", "{\"key1\":\"1\", \"key2\":\"2\"}");
+
         }
 
         private IAmazonLambda _lambdaClient;
