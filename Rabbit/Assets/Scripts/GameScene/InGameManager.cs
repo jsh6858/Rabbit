@@ -36,13 +36,11 @@ namespace GameScene
         public bool isStageClear = false;
         private float fadeTimer = 50.0f;
         public GAMESTATE nowState = GAMESTATE.Ready_State;
-
         //private int count = 0;
 
         void Start()
         {
             nowState = GAMESTATE.Ready_State;
-
             NextState();
         }
 
@@ -112,8 +110,11 @@ namespace GameScene
             // 필요한 엔딩 이미지 ㄱㄱ
 
             // 다음 씬 ㄱㄱ
-           
-            yield return new WaitForSeconds(5.0f);
+
+            yield return new WaitForSeconds(2.0f);
+            // 점수 출력
+            GameObject.Find("ScorePrint").transform.Find("Text").GetComponent<Text>().text = nowScore.ToString() + "점";
+            yield return new WaitForSeconds(2.0f);
             yield return StartCoroutine(CameraFadeOut());
 
             GameObject.Find("Canvas").GetComponent<SceneChange>().ChangeScene(nextScene);

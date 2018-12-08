@@ -25,8 +25,8 @@ public class InputButton : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Input.mousePosition.x > 110 && Input.mousePosition.y > 110 &&
-                Input.mousePosition.x < 630 && Input.mousePosition.y < 1170)        // 임시 화면 범위 검사
+            if (Input.mousePosition.x > 98.5f && Input.mousePosition.y > 225 &&
+                Input.mousePosition.x < 621.5 && Input.mousePosition.y < 1055)        // 화면 범위 검사
                 CheckTouchIn = true;
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0) && CheckTouchIn)
