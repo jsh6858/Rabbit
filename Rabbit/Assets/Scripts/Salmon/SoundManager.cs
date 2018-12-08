@@ -50,7 +50,7 @@ public class Sound_Manager
             return _dicSound;
         }
     }
-
+    
     public void PlaySound(string name)
     {
         if (!m_dicSound.ContainsKey(name))
@@ -61,7 +61,13 @@ public class Sound_Manager
 
     public void Stop_Sound()
     {
+        Debug.Log("Stop Sound");
         m_myAudio.Stop();
+    }
+
+    public bool IsPlaying()
+    {
+        return m_myAudio.isPlaying;
     }
 }
 

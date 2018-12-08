@@ -7,7 +7,8 @@ public class TouchSceneChange : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        Sound_Manager.GetInstance().Stop_Sound();
+        Sound_Manager.GetInstance().PlaySound("title");
 	}
 	
 	// Update is called once per frame

@@ -42,6 +42,9 @@ namespace GameScene
         {
             nowState = GAMESTATE.Ready_State;
             NextState();
+            
+            if(!Sound_Manager.GetInstance().IsPlaying())
+                Sound_Manager.GetInstance().PlaySound("In_Game");
         }
 
         void NextState()
@@ -101,7 +104,7 @@ namespace GameScene
 
             string nextScene;
 
-            if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage])
+            if(nowScore < GameDataBase.GetInstance().cutlineScore[GameDataBase.GetInstance().nowStage - 1])
             {
                 // 실패!!
                 nextScene = "BadEndingScene";

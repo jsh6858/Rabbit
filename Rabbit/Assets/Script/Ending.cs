@@ -8,7 +8,10 @@ public class Ending : MonoBehaviour {
   // Use this for initialization
     void Start () {
         Invoke("of",5.0f);
-	}
+
+        Sound_Manager.GetInstance().Stop_Sound();
+        Sound_Manager.GetInstance().PlaySound("Happy Ending");
+    }
 	
     void of()
     {

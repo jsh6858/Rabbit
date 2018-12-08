@@ -93,7 +93,7 @@ namespace GameScene
             }
             else
             {
-                opZoneSetting.iCutlineScore = new string[] { "10","15","20","25","30" };
+                opZoneSetting.iCutlineScore = new string[] { "5","10","15","20","25" };
                 opZoneSetting.fpointPercent = "0.4";
                 opZoneSetting.iHintCount = "5";
                 opZoneSetting.iMinusScore = "10";

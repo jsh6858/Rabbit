@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BadEndingScene.unity
     guid: af513fd5cccfec548ba494d26dc07d9b
+  - enabled: 1
+    path: Assets/Scenes/HappyEndingScene.unity
+    guid: 5fa170d4e8ce35b4d84bc850f8808fd0
+  - enabled: 1
+    path: Assets/Scenes/Ranking.unity
+    guid: f1484631869ffe644a761d50a786be34
   m_configObjects: {}
