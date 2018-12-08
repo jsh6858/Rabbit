@@ -32,6 +32,7 @@ namespace GameScene
         private OperateZone opZoneSetting = new OperateZone();
 
         public int[] cutlineScore;
+        public float pointPercent;
         public int hintCount;
         public int minusScore;
 
@@ -71,6 +72,7 @@ namespace GameScene
             else
             {
                 opZoneSetting.iCutlineScore = new string[] { "10","15","20","25","30" };
+                opZoneSetting.fpointPercent = "0.4";
                 opZoneSetting.iHintCount = "5";
                 opZoneSetting.iMinusScore = "10";
 
@@ -80,6 +82,7 @@ namespace GameScene
                 WriteStringToFile(strJson,path);
             }
             cutlineScore = System.Array.ConvertAll(opZoneSetting.iCutlineScore,str=>int.Parse(str));
+            pointPercent = float.Parse(opZoneSetting.fpointPercent);
             hintCount = int.Parse(opZoneSetting.iHintCount);
             minusScore = int.Parse(opZoneSetting.iMinusScore);
         }
@@ -177,6 +180,7 @@ namespace GameScene
     public class OperateZone
     {
         public string[] iCutlineScore { get; set; }        //int      - 실패 점수
+        public string fpointPercent { get; set; }           //float    - 포인트 퍼센트
         public string iHintCount { get; set; }             //int      - 힌트 갯수
         public string iMinusScore { get; set; }            //int      - 감점(힌트 사용시)
     }

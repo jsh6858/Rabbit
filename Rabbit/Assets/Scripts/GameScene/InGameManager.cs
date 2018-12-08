@@ -33,6 +33,7 @@ namespace GameScene
 
         public GestureManager gestureManager = null;
         public bool isSubmit = false;
+        public bool isHint = false;
         public bool isStageClear = false;
         private float fadeTimer = 50.0f;
         public GAMESTATE nowState = GAMESTATE.Ready_State;
@@ -73,8 +74,17 @@ namespace GameScene
             gestureManager.isDrawable = true;
             
             nowState = GAMESTATE.Submit_State;
+            
+            while(!isSubmit)
+            {
+                if(isHint)
+                {
+                    isHint = false;
+                    gestureManager.ShowHint();
+                }
 
-            yield return new WaitUntil(()=>isSubmit);            
+                yield return null;
+            }         
 
             NextState();
         }
