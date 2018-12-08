@@ -4,53 +4,77 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-<<<<<<< HEAD
-public class TouchChangeImage : MonoBehaviour
+public class TouchChangeImage : MonoBehaviour 
 {
-=======
-public class TouchChangeImage : MonoBehaviour {
->>>>>>> 969b19295627991dfb8570a39c844512579ba143
-    public Texture[] TextureArray;
-    public bool IsChangeSceneScript;
-    public string ChangeSceneName;
-    private RawImage ImageTexture;
-    private int MaxSize = 0;
-    private int TouchCount = 0;
-    private int OldTouchCount = -1;
-    public string[] IntroText;
+    public GameObject[] introArray;
+
+    private float timer = 0.0f;
+
     void Start ()
     {
-        ImageTexture = GetComponent<RawImage>();
-        MaxSize = TextureArray.Length;
-    }
-	
-    void KeyCheck()
-    {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        foreach(GameObject obj in introArray)
         {
-            ++TouchCount;
-        }
-    }
-	// Update is called once per frame
-	void Update () {
-        KeyCheck();
-        
-        if(TouchCount >= MaxSize)
-        {
-            if (!IsChangeSceneScript)
-                return;
-            else
-            {
-                SceneManager.LoadScene(ChangeSceneName);
-                return;
-            }
+            obj.SetActive(false);
         }
 
-        if(OldTouchCount != TouchCount)
-        {
-            OldTouchCount = TouchCount;
-            ImageTexture.texture = TextureArray[TouchCount];
-            transform.Find("Text").GetComponent<Text>().text = IntroText[TouchCount];
-        }
+        StartCoroutine(ChangeImage());
     }
+
+    IEnumerator ChangeImage()
+    {
+        introArray[0].SetActive(true);
+
+        yield return new WaitUntil(()=>Input.GetKeyDown(KeyCode.Mouse0) || timer > 4.0f);
+        yield return null;
+
+        introArray[0].SetActive(false);
+        introArray[1].SetActive(true);
+
+        timer = 0.0f;
+
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0) || timer > 4.0f);
+        yield return null;
+
+        introArray[1].SetActive(false);
+        introArray[2].SetActive(true);
+
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0) || timer > 4.0f);
+        yield return null;
+
+        SceneManager.LoadScene("GameScene");
+    }
+
+    void FixedUpdate()
+    {
+        timer += Time.fixedDeltaTime;
+    }
+
+    //void Update ()
+    //{
+    //    KeyCheck();
+        
+    //    if(TouchCount >= MaxSize)
+    //    {
+    //        if (!IsChangeSceneScript)
+    //            return;
+    //        else
+    //        {
+    //            SceneManager.LoadScene(ChangeSceneName);
+    //            return;
+    //        }
+    //    }
+
+    //    if(OldTouchCount != TouchCount)
+    //    {
+    //        if(TouchCount == MaxSize-1)
+    //        {
+    //            Debug.Log("!!");
+    //        }
+
+
+    //        OldTouchCount = TouchCount;
+    //        ImageTexture.texture = TextureArray[TouchCount];
+    //        transform.Find("Text").GetComponent<Text>().text = IntroText[TouchCount];
+    //    }
+    //}
 }
