@@ -199,7 +199,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: e8106fdd8f82f834599333eb5f43b195, type: 3}
   - {fileID: 2800000, guid: e8106fdd8f82f834599333eb5f43b195, type: 3}
   IsChangeSceneScript: 1
-  ChangeSceneName: GameScene1
+  ChangeSceneName: GameScene
   IntroText:
   - "\uC870\uC120 \uCD5C\uACE0\uC758 \uD654\uAC00 \uB9F7\uB3CC\u2019\uCF00\uBE44\uB2C8\u2019\uC120\uC0DD"
   - "\uADF8\uAC00 \uC790\uC2E0\uC758 \uD6C4\uACC4\uC790\uB97C \uCC3E\uC73C\uB824 \uD558\uB294\uB370"
