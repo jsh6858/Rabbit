@@ -220,14 +220,20 @@ namespace GameScene
         int Classify(Vector2[] candidate)
         {
             Transform sampleLine = transform.Find("Line");
+            List<int> mainNumList = new List<int>();
 
-            List<int> mainNumList = mainList.ConvertAll(obj => int.Parse(obj.name.Split('_')[1]));
+            for(int i=0;i<mainList.Count;i++)
+            {
+                if(mainList[i].activeSelf)
+                {
+                    mainNumList.Add(int.Parse(mainList[i].name.Split('_')[1]));
+                }
+            }
 
             // 점 통과 점수
-            float elseScore = (checkPointList.Count/(float) mainNumList.Count)*50.0f;
+            float elseScore = (checkPointList.Count/(float)mainNumList.Count)*50.0f;
 
             List<int> checkList = checkPointList.ConvertAll(col => int.Parse(col.name.Split('_')[1])).ToList();
-
 
             if(mainNumList.Equals(checkList))
             {
