@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: c9bb6d98d5cbbaf4c90a4d9a226c53e8
+timeCreated: 1544535033
+licenseType: Pro
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: EBSJSK Medium
+  fontNames:
+  - EBSJSK Medium
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
