@@ -19,8 +19,6 @@ public class ResourceManager : MonoBehaviour
         return instance;
     }
 
-    //public InGameManager inGameMgr = null;
-
     public Transform monsterBox;
     public Transform monsterAliveBox;
     public Transform effectBox;
