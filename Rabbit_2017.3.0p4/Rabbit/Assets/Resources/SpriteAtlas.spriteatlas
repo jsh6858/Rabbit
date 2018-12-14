@@ -28,7 +28,6 @@ SpriteAtlas:
       enableTightPacking: 0
     variantMultiplier: 1
     packables:
-    - {fileID: 2800000, guid: 5eca87cddd7324b498ded3d367a51443, type: 3}
     - {fileID: 2800000, guid: ec42c1f87f799a44fb5813f62e34506b, type: 3}
     - {fileID: 2800000, guid: cea95409899e5d74097466df663b1136, type: 3}
     - {fileID: 2800000, guid: 675a4901251af724eab30d20083a8177, type: 3}
@@ -38,11 +37,9 @@ SpriteAtlas:
   - {fileID: 21300000, guid: ec42c1f87f799a44fb5813f62e34506b, type: 3}
   - {fileID: 21300000, guid: cea95409899e5d74097466df663b1136, type: 3}
   - {fileID: 21300000, guid: 675a4901251af724eab30d20083a8177, type: 3}
-  - {fileID: 21300000, guid: 5eca87cddd7324b498ded3d367a51443, type: 3}
   m_PackedSpriteNamesToIndex:
   - Hint
   - DuguDugu
   - Stop
-  - Spot
   m_Tag: SpriteAtlas
   m_IsVariant: 0

@@ -12,10 +12,7 @@ public class IntroManager : MonoBehaviour
     {
         soundManager = SoundManager.instance;
         soundManager.PlayMusic(BackgroundMusic.IntroScene_Music);
-
-        GameScene.GameDataBase.GetInstance().nowStage = 1;
-        GameScene.GameDataBase.GetInstance().totalScore = 0;
-
+        
         for(int i=0;i<imageArray.childCount;i++)
         {
             imageArray.GetChild(i).gameObject.SetActive(false);

@@ -11,12 +11,12 @@ public class InputButton : MonoBehaviour
     public Sprite ChangeSprite;
     private Image ChangeImage;
 
-    private GameScene.InGameManager inGameManager = null;
+    private InGameManager inGameManager = null;
     public GameObject ScorePrintObject;
 
     void Start ()
     {
-        inGameManager = GameScene.InGameManager.Getinstance();
+        inGameManager = InGameManager.Getinstance();
         ChangeImage = GetComponent<Image>();
 
         BoxCollider2D box = inGameManager.gestureManager.transform.Find("DrawBox").GetComponent<BoxCollider2D>();

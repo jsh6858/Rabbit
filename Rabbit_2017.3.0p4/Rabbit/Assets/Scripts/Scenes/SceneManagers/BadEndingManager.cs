@@ -11,8 +11,7 @@ public class BadEndingManager : MonoBehaviour
         soundManager = SoundManager.instance;
         soundManager.PlayMusic(BackgroundMusic.BadEndingScene_Music);
 
-        GameScene.GameDataBase.GetInstance().nowStage = 1;
-        GameScene.GameDataBase.GetInstance().totalScore = 0;
+        GameDataBase.GetInstance().SetGameData(0,1);
     }
 
     public void OnEndingButtonClicked()
