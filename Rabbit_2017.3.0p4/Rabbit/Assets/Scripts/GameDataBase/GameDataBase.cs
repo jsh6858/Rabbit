@@ -76,7 +76,7 @@ public class GameDataBase : MonoBehaviour
         gestureSampleDictionary.Clear();
         gustureList.Clear();
 
-        Object[] JSONObjects = Resources.LoadAll("Texts/"+nowStage+"/");
+        Object[] JSONObjects = Resources.LoadAll("Texts/"+Mathf.Clamp(nowStage,1,5)+"/");
         TextAsset[] textArray = new TextAsset[JSONObjects.Length];
 
         for(int i = 0;i<JSONObjects.Length;i++)
@@ -105,7 +105,7 @@ public class GameDataBase : MonoBehaviour
     public void AddGameData(int _score,int _stage)
     {
         totalScore += _score;
-        nowStage += _stage;
+        nowStage = Mathf.Clamp(nowStage+_stage,1,6);
 
         SaveGameData();
     }

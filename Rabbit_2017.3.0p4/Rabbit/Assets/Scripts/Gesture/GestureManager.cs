@@ -14,16 +14,17 @@ public class GestureManager : MonoBehaviour
     private List<Vector2> pointList = new List<Vector2>();
     private List<Collider2D> checkPointList = new List<Collider2D>();
     private List<GameObject> mainPointList = new List<GameObject>();
-
-
+    
     private Rect drawArea;
     private LineRenderer lineRenderer;
-
+    
     public GestureData nowGesture;
     public Text gestureText;
     public Text alramText;
     private Vector2[] samplePointArray;
     public bool isDrawable = false;
+    private string[] alramWords = {"제대로 하고 있는거 맞아?","거기가 정말 맞을까?","흠....?","엉.....?","아... 그게....  하아......"};
+
 
     private InGameManager inGameManager = null;
 
@@ -47,6 +48,13 @@ public class GestureManager : MonoBehaviour
 
         pointList.Clear();
         checkPointList.Clear();
+    }
+
+    public void DisableObject()
+    {
+        transform.Find("Line").gameObject.SetActive(false);
+        transform.Find("SampleLine").gameObject.SetActive(false);
+        lineRenderer.gameObject.SetActive(false);
     }
 
     public IEnumerator SetPointGroup()
@@ -82,7 +90,16 @@ public class GestureManager : MonoBehaviour
             point.name = "Point_"+i;
         }
 
+        transform.Find("Line").gameObject.SetActive(false);
+
+        //StartCoroutine(Speak());
+
         yield return null;
+    }
+
+    public void ShowPoint()
+    {
+        transform.Find("Line").gameObject.SetActive(true);
     }
 
     public void ShowHint()
@@ -101,6 +118,21 @@ public class GestureManager : MonoBehaviour
             renderer.color = Color.white;
         }
     }
+
+    //IEnumerator Speak()
+    //{
+    //    while(true)
+    //    {
+    //        while(pointList.Count!=0 && isDrawable)
+    //        {
+    //            alramText.text = alramWords[UnityEngine.Random.Range(0,alramWords.Length)];
+
+    //            yield return new WaitForSeconds(2.0f);
+    //        }
+
+    //        yield return null;
+    //    }
+    //}
 
     void ControlMouse()
     {
@@ -142,9 +174,11 @@ public class GestureManager : MonoBehaviour
 
             inputPosition.z = 0.0f;
 
-            if(drawArea.Contains(inputPosition))
+            if(pointList.Count != 0)
             {
                 isDrawable = false;
+
+                alramText.text = alramWords[UnityEngine.Random.Range(0,alramWords.Length)];
             }
         }
     }
@@ -154,6 +188,8 @@ public class GestureManager : MonoBehaviour
     {
         Transform sample = transform.Find("Line");
         GameObject line = Instantiate(linePrefab,transform.position,transform.rotation) as GameObject;
+        line.name = "SampleLine";
+        line.transform.parent = transform;
         LineRenderer sampleLine = line.GetComponent<LineRenderer>();
 
         sampleLine.startColor = Color.red;

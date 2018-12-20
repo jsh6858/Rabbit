@@ -31,6 +31,11 @@ public class InGameManager : MonoBehaviour
 
     public GestureManager gestureManager = null;
     public SoundManager soundManager = null;
+
+    public GameObject fadePanel = null;
+    public GameObject tutorialPanel = null;
+    public GameObject buttonPanel = null;
+    public GameObject scorePanel = null;
     public bool isSubmit = false;
     public bool isHint = false;
     public bool isStageClear = false;
@@ -44,6 +49,10 @@ public class InGameManager : MonoBehaviour
 
         soundManager = SoundManager.instance;
         soundManager.PlayMusic(BackgroundMusic.GameScene_Music);
+
+        scorePanel.transform.Find("Text").GetComponent<Text>().text = "";
+        buttonPanel.transform.Find("Hint").gameObject.SetActive(true);
+        buttonPanel.transform.Find("Submit").gameObject.SetActive(false);
     }
 
     void NextState()
@@ -56,18 +65,46 @@ public class InGameManager : MonoBehaviour
         StartCoroutine((IEnumerator) info.Invoke(this,null));
     }
 
+    public void OnHintButton()
+    {
+        isHint = true;
+        soundManager.PlayEffect(SoundEffect.Hint_Effect);
+    }
+
+    public void OnSubmitButton()
+    {
+        isSubmit = true;
+    }
+
     IEnumerator PlayReady()
     {
         // 게임 기본 세팅
         GameDataBase.GetInstance().LoadGusture();
-
         gestureManager.nowGesture = GameDataBase.GetInstance().GetGeusture();
 
-        yield return StartCoroutine(gestureManager.SetPointGroup());
-
         nowState = GAMESTATE.Draw_State;
-            
-        yield return StartCoroutine(CameraFadeIn());
+
+        if(GameDataBase.GetInstance().nowStage==1)
+        {
+            tutorialPanel.SetActive(true);
+
+            yield return StartCoroutine(CameraFadeIn());
+            yield return new WaitUntil(()=>Input.GetMouseButtonDown(0));
+
+            tutorialPanel.SetActive(false);
+
+            yield return StartCoroutine(gestureManager.SetPointGroup());
+            gestureManager.ShowPoint();
+
+            yield return new WaitForSeconds(0.5f);
+        }
+        else
+        {
+            yield return StartCoroutine(gestureManager.SetPointGroup());
+            yield return StartCoroutine(CameraFadeIn());
+
+            gestureManager.ShowPoint();
+        }
 
         NextState();
     }
@@ -86,8 +123,15 @@ public class InGameManager : MonoBehaviour
                 gestureManager.ShowHint();
             }
 
+            if(!gestureManager.isDrawable)
+            {
+                buttonPanel.transform.Find("Hint").gameObject.SetActive(false);
+                buttonPanel.transform.Find("Submit").gameObject.SetActive(true);
+            }
+
             yield return null;
-        }         
+        }
+
 
         NextState();
     }
@@ -144,13 +188,13 @@ public class InGameManager : MonoBehaviour
         yield return StartCoroutine(gestureManager.ShowSampleLine());
 
         yield return new WaitForSeconds(1.0f);
-            
-        // 필요한 엔딩 이미지 ㄱㄱ
-        // 점수 출력
 
-        GameObject.Find("ScorePrint").transform.Find("Text").GetComponent<Text>().text = nowScore.ToString() + "점";
+        // 필요한 엔딩 이미지 ㄱㄱ
+        scorePanel.transform.Find("Text").GetComponent<Text>().text = nowScore.ToString() + "점";
 
         yield return new WaitForSeconds(2.0f);
+
+        gestureManager.DisableObject();
 
         yield return StartCoroutine(CameraFadeOut());
 
@@ -159,7 +203,7 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator CameraFadeIn()
     {
-        SpriteRenderer image = Camera.main.transform.Find("FadeFillter").GetComponent<SpriteRenderer>();
+        RawImage image = fadePanel.GetComponent<RawImage>();
 
         for(int i=0;i<fadeTimer;i++)
         {
@@ -170,7 +214,7 @@ public class InGameManager : MonoBehaviour
 
     IEnumerator CameraFadeOut()
     {
-        SpriteRenderer image = Camera.main.transform.Find("FadeFillter").GetComponent<SpriteRenderer>();
+        RawImage image = fadePanel.GetComponent<RawImage>();
 
         for(int i=0;i<=fadeTimer;i++)
         {

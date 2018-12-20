@@ -19,8 +19,6 @@ public class ResourceManager : MonoBehaviour
         return instance;
     }
 
-    private GameObject effectBox = null;
-
     public Dictionary<string,GameObject> effectDic = new Dictionary<string,GameObject>();
     public Dictionary<string,AudioClip> audioDic = new Dictionary<string,AudioClip>();
 

@@ -18,6 +18,8 @@ public class IntroManager : MonoBehaviour
             imageArray.GetChild(i).gameObject.SetActive(false);
         }
 
+        SceneController.GetInstance().LoadGameScene();
+
         StartCoroutine(ChangeImage());
     }
 
@@ -34,7 +36,7 @@ public class IntroManager : MonoBehaviour
             imageArray.GetChild(i).gameObject.SetActive(false);
         }
 
-        SceneController.GetInstance().ChangeScene(SCENESTATE.GameScene);
+        SceneController.GetInstance().ChangeGameScene();
     }
 
     void FixedUpdate()
